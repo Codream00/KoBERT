@@ -9,6 +9,8 @@ import numpy as np
 from kobert.pytorch_kobert import get_pytorch_kobert_model
 from kobert.utils import get_tokenizer
 
+import sys
+
 model, vocab = get_pytorch_kobert_model()
 
 tokenizer = get_tokenizer()
@@ -23,8 +25,9 @@ sequence_output, pooled_output = model(input_ids, input_mask, token_type_ids) ""
 
 sp = SentencepieceTokenizer(tokenizer)
 
-tokens1 = sp(input())
-tokens2 = sp(input())
+print(sys.argv)
+tokens1 = sp(sys.argv[1])
+tokens2 = sp(sys.argv[2])
 
 ids1 = []
 for token in tokens1:
@@ -34,7 +37,7 @@ ids2 = []
 for token in tokens2:
     ids2.append(vocab[token])
 
-max_seq_length = 10
+max_seq_length = 50
 
 mask = [1 for i in range(len(ids1))]
 input_mask1 = [1] * len(ids1)
